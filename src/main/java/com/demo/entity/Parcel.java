@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "parcels", uniqueConstraints = @UniqueConstraint(columnNames = "trackingNumber"))
 public class Parcel {
 
     @Id
@@ -11,18 +10,18 @@ public class Parcel {
     private Long id;
 
     private String trackingNumber;
-    private String senderName;
-    private String receiverName;
-    private Double weightKg;
+    private double weightKg;
 
-    public Parcel() {}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Parcel(String trackingNumber, String senderName, String receiverName, Double weightKg) {
+    public String getTrackingNumber() { return trackingNumber; }
+    public void setTrackingNumber(String trackingNumber) {
         this.trackingNumber = trackingNumber;
-        this.senderName = senderName;
-        this.receiverName = receiverName;
-        this.weightKg = weightKg;
     }
 
-    // getters and setters
+    public double getWeightKg() { return weightKg; }
+    public void setWeightKg(double weightKg) {
+        this.weightKg = weightKg;
+    }
 }
