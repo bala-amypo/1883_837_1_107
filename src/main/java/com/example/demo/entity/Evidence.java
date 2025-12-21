@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class Evidence {
     private LocalDateTime uploadedAt;
 
     @PrePersist
-    void onCreate() {
+    void uploaded() {
         this.uploadedAt = LocalDateTime.now();
     }
 
