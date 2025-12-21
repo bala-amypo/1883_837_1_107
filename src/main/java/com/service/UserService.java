@@ -3,8 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.User;
 
 public interface UserService {
-
-    public interface UserService {
-        User getByEmail(String email);
-        User registerUser(User user);
+    User getByEmail(String email);
+    User registerUser(User user);
 }
