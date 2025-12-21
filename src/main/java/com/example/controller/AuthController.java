@@ -29,6 +29,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody User user) {
+
         User dbUser = userService.findByEmail(user.getEmail());
 
         if (!encoder.matches(user.getPassword(), dbUser.getPassword())) {

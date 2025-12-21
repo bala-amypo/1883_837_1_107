@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Evidence;
 import com.example.demo.service.EvidenceService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class EvidenceController {
     }
 
     @GetMapping("/claim/{claimId}")
-    public List<Evidence> getAll(@PathVariable Long claimId) {
+    public List<Evidence> getEvidence(@PathVariable Long claimId) {
         return evidenceService.getEvidenceForClaim(claimId);
     }
 }

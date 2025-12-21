@@ -15,8 +15,8 @@ public class DamageClaimController {
     }
 
     @PostMapping("/file/{parcelId}")
-    public DamageClaim file(@PathVariable Long parcelId,
-                            @RequestBody DamageClaim claim) {
+    public DamageClaim fileClaim(@PathVariable Long parcelId,
+                                 @RequestBody DamageClaim claim) {
         return claimService.fileClaim(parcelId, claim);
     }
 
@@ -26,7 +26,7 @@ public class DamageClaimController {
     }
 
     @GetMapping("/{claimId}")
-    public DamageClaim get(@PathVariable Long claimId) {
+    public DamageClaim getClaim(@PathVariable Long claimId) {
         return claimService.getClaim(claimId);
     }
 }

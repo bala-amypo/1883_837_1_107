@@ -15,12 +15,12 @@ public class ParcelController {
     }
 
     @PostMapping
-    public Parcel add(@RequestBody Parcel parcel) {
+    public Parcel addParcel(@RequestBody Parcel parcel) {
         return parcelService.addParcel(parcel);
     }
 
     @GetMapping("/tracking/{trackingNumber}")
-    public Parcel get(@PathVariable String trackingNumber) {
+    public Parcel getParcel(@PathVariable String trackingNumber) {
         return parcelService.getByTrackingNumber(trackingNumber);
     }
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.ClaimRule;
 import com.example.demo.service.ClaimRuleService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,12 +17,12 @@ public class ClaimRuleController {
     }
 
     @PostMapping
-    public ClaimRule add(@RequestBody ClaimRule rule) {
+    public ClaimRule addRule(@RequestBody ClaimRule rule) {
         return ruleService.addRule(rule);
     }
 
     @GetMapping
-    public List<ClaimRule> getAll() {
+    public List<ClaimRule> getAllRules() {
         return ruleService.getAllRules();
     }
 }
