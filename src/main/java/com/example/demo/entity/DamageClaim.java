@@ -1,8 +1,7 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "damage_claims")
@@ -23,16 +22,12 @@ public class DamageClaim {
 
     private Double score;
 
-    @ManyToMany
-    private Set<ClaimRule> appliedRules;
-
-    @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL)
-    private Set<Evidence> evidence;
-
     @PrePersist
-    void onCreate() {
+    void createdAt() {
         this.filedAt = LocalDateTime.now();
     }
 
     public DamageClaim() {}
+
+    // getters and setters
 }

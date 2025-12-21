@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -28,5 +28,5 @@ public class User {
         this.role = role;
     }
 
-    // getters & setters
+    // getters and setters
 }

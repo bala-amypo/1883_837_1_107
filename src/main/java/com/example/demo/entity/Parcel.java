@@ -1,8 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "parcels", uniqueConstraints = @UniqueConstraint(columnNames = "trackingNumber"))
@@ -16,10 +14,6 @@ public class Parcel {
     private String senderName;
     private String receiverName;
     private Double weightKg;
-    private LocalDateTime deliveredAt;
-
-    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL)
-    private Set<DamageClaim> claims;
 
     public Parcel() {}
 
@@ -29,4 +23,6 @@ public class Parcel {
         this.receiverName = receiverName;
         this.weightKg = weightKg;
     }
+
+    // getters and setters
 }
