@@ -15,33 +15,17 @@ public class JwtUtil {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String generateToken(String username) {
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
+    public String generateToken(Long id, String email, String role) {
+    // Include id, email, role in claims
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("id", id);
+    claims.put("role", role);
 
-    public String extractUsername(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            getClaims(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
+    return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(email)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // example
+            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+            .compact();
 }
