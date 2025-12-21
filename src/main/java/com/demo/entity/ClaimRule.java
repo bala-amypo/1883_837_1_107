@@ -3,22 +3,21 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "claim_rules")
 public class ClaimRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ruleName;
-    private String conditionExpression;
-    private Double weight;
+    private double weight;
+    private double score;
 
-    public ClaimRule() {}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public ClaimRule(String ruleName, String conditionExpression, Double weight) {
-        this.ruleName = ruleName;
-        this.conditionExpression = conditionExpression;
-        this.weight = weight;
-    }
+    public double getWeight() { return weight; }
+    public void setWeight(double weight) { this.weight = weight; }
+
+    public double getScore() { return score; }
+    public void setScore(double score) { this.score = score; }
 }
