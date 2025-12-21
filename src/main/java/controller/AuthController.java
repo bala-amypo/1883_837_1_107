@@ -1,45 +1,69 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
-import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
+import com.example.demo.security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
-    private final JwtUtil jwtUtil;
-    private final BCryptPasswordEncoder encoder;
+    @Autowired
+    private UserService userService;
 
-    public AuthController(UserService userService,
-                          JwtUtil jwtUtil,
-                          BCryptPasswordEncoder encoder) {
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
-        this.encoder = encoder;
-    }
+    @Autowired
+    private JwtUtil jwtUtil;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    // User registration
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        // Encode password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User savedUser = userService.registerUser(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "User registered successfully");
+        response.put("user", savedUser);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // User login
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        User dbUser = userService.getByEmail(user.getEmail());
+        Map<String, Object> response = new HashMap<>();
 
-        User dbUser = userService.findByEmail(user.getEmail());
-
-        if (!encoder.matches(user.getPassword(), dbUser.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+        if (dbUser == null) {
+            response.put("error", "User not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
-        return jwtUtil.generateToken(
-                dbUser.getId(),
-                dbUser.getEmail(),
-                dbUser.getRole()
-        );
+        // Check password
+        if (!passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+            response.put("error", "Invalid credentials");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
+
+        // Generate JWT token
+        String token = jwtUtil.generateToken(dbUser.getEmail()); // Single argument
+
+        response.put("token", token);
+        response.put("userId", dbUser.getId());
+        response.put("email", dbUser.getEmail());
+        response.put("role", dbUser.getRole());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
