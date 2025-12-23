@@ -22,7 +22,7 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
+
     private BCryptPasswordEncoder passwordEncoder;
 
     // User registration
