@@ -2,46 +2,38 @@ package com.example.demo.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 
-@Component
 public class JwtUtil {
 
-    private static final String SECRET = "mysecretkeymysecretkeymysecretkey12";
-    private static final long EXPIRATION = 1000 * 60 * 60; // 1 hour
+    private final Key key;
+    private final long expirationMillis;
 
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    public JwtUtil(String secretKey, long expirationMillis) {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.expirationMillis = expirationMillis;
+    }
 
-    public String generateToken(String username) {
+    public String generateToken(Long userId, String email, String role) {
+
         return Jwts.builder()
-                .setSubject(username)
+                .claim("userId", userId)
+                .claim("email", email)
+                .claim("role", role)
+                .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        return getClaims(token).getSubject();
-    }
+    public Jws<Claims> validateToken(String token) {
 
-    public boolean validateToken(String token) {
-        try {
-            getClaims(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
-    }
-
-    private Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseClaimsJws(token);
     }
 }
