@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Evidence;
+import com.example.demo.model.Evidence;
 
 import java.util.List;
 

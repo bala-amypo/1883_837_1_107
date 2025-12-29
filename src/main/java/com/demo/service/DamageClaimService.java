@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.DamageClaim;
+import com.example.demo.model.DamageClaim;
 
 public interface DamageClaimService {
 

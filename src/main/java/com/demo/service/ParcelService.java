@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Parcel;
+import com.example.demo.model.Parcel;
 
 public interface ParcelService {
 
