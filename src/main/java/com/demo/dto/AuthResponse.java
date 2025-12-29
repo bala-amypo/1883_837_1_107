@@ -1,25 +1,35 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
+public class AuthResponse {
 
-@Entity
-public class Evidence {
+    private String token;
+    private Long userId;
+    private String email;
+    private String role;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public AuthResponse() {
+    }
 
-    private String fileUrl;
+    public AuthResponse(String token, Long userId, String email, String role) {
+        this.token = token;
+        this.userId = userId;
+        this.email = email;
+        this.role = role;
+    }
 
-    @ManyToOne
-    private DamageClaim claim;
+    public String getToken() {
+        return token;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getUserId() {
+        return userId;
+    }
 
-    public String getFileUrl() { return fileUrl; }
-    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+    public String getEmail() {
+        return email;
+    }
 
-    public DamageClaim getClaim() { return claim; }
-    public void setClaim(DamageClaim claim) { this.claim = claim; }
+    public String getRole() {
+        return role;
+    }
 }

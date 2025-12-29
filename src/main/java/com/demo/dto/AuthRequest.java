@@ -1,38 +1,26 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
-import java.util.Set;
+public class AuthRequest {
 
-@Entity
-public class DamageClaim {
+    private String email;
+    private String password;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public AuthRequest() {
+    }
 
-    private String status;
-    private double score;
+    public String getEmail() {
+        return email;
+    }
 
-    @ManyToOne
-    private Parcel parcel;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    @ManyToMany
-    private Set<ClaimRule> appliedRules;
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public double getScore() { return score; }
-    public void setScore(double score) { this.score = score; }
-
-    public Parcel getParcel() { return parcel; }
-    public void setParcel(Parcel parcel) { this.parcel = parcel; }
-
-    public Set<ClaimRule> getAppliedRules() { return appliedRules; }
-    public void setAppliedRules(Set<ClaimRule> appliedRules) {
-        this.appliedRules = appliedRules;
+    public String getPassword() {
+        return password;
+    }
+ 
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
