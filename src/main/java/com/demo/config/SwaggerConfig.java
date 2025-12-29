@@ -1,23 +1,37 @@
 package com.example.demo.config;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
-public class WebConfig {
+public class SwaggerConfig { // Class name changed from OpenApiConfig
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // allow all paths
-                        .allowedOrigins("*") // allow all origins; replace * with your front-end URL if needed
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
-            }
-        };
+    public OpenAPI customOpenAPI() {
+
+        SecurityScheme bearerAuth = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+
+        Server server = new Server()
+                .url("https://9144.408procr.amypo.ai") // URL updated
+                .description("Production Server");
+
+        return new OpenAPI()
+                .addSecurityItem(
+                        new SecurityRequirement().addList("bearerAuth")
+                )
+                .components(
+                        new Components().addSecuritySchemes("bearerAuth", bearerAuth)
+                )
+                .servers(List.of(server));
     }
 }
