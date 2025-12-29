@@ -1,23 +1,29 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
+public class ApiResponse {
 
-@Entity
-public class ClaimRule {
+    private boolean success;
+    private String message;
+    private Object data;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public ApiResponse() {
+    }
 
-    private double weight;
-    private double score;
+    public ApiResponse(boolean success, String message, Object data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public boolean isSuccess() {
+        return success;
+    }
 
-    public double getWeight() { return weight; }
-    public void setWeight(double weight) { this.weight = weight; }
+    public String getMessage() {
+        return message;
+    }
 
-    public double getScore() { return score; }
-    public void setScore(double score) { this.score = score; }
+    public Object getData() {
+        return data;
+    }
 }

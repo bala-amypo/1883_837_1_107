@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.DamageClaim;
+import com.example.demo.model.DamageClaim;
 import com.example.demo.service.DamageClaimService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +15,10 @@ public class DamageClaimController {
     }
 
     @PostMapping("/file/{parcelId}")
-    public DamageClaim fileClaim(@PathVariable Long parcelId,
-                                 @RequestBody DamageClaim claim) {
+    public DamageClaim fileClaim(
+            @PathVariable Long parcelId,
+            @RequestBody DamageClaim claim) {
+
         return claimService.fileClaim(parcelId, claim);
     }
 

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Parcel;
+import com.example.demo.model.Parcel;
 import com.example.demo.service.ParcelService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class ParcelController {
     }
 
     @GetMapping("/tracking/{trackingNumber}")
-    public Parcel getParcel(@PathVariable String trackingNumber) {
+    public Parcel getByTracking(@PathVariable String trackingNumber) {
         return parcelService.getByTrackingNumber(trackingNumber);
     }
 }
